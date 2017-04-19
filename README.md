@@ -6,4 +6,4 @@
 * Aleksandar Ikonomov
 * Mario Georgiev
 * Nadejda Todorova
-* Yoan ivanov
+* Yoan Ivanov
