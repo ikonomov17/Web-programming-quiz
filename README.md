@@ -9,35 +9,35 @@
 * Yoan Ivanov
 
 ### Instructions
-1. Провери дали имаш инсталиран "virtualenv" с командата:
-virtualenv --version
-Aко излезне 15.0.1 например всичко е ок.Ако даде грешка трябва да го инсталираш:
-(за ubuntu)
-sudo apt-get install python-virtualenv
+1. Провери дали имаш инсталиран "virtualenv" с командата: <br />
+virtualenv --version<br />
+Aко излезне 15.0.1 например всичко е ок.Ако даде грешка трябва да го инсталираш:<br />
+(за ubuntu)<br />
+sudo apt-get install python-virtualenv<br />
 
-2. След това свали репозиторито на проекта ни (ако го нямаш):
-git clone https://github.com/ikonomov17/Web-programming-quiz.git
+2. След това свали репозиторито на проекта ни (ако го нямаш):<br />
+git clone https://github.com/ikonomov17/Web-programming-quiz.git<br />
 
-3. В главната папка отвори конзолата 
-(за windows: shift+дясно копче => Open command prompt /
-ubuntu: дясно копче open terminal)
-и въведи:
-virtualenv venv
+3. В главната папка отвори конзолата <br />
+(за windows: shift+дясно копче => Open command prompt /<br />
+ubuntu: дясно копче open terminal)<br />
+и въведи:<br />
+virtualenv venv<br />
 
-4. След тази команда вече трябва да има две папки app и venv
+4. След тази команда вече трябва да има две папки app и venv<br />
 
-5. В конзолата пишеш 
-ubuntu:
-source venv/bin/activate
-windows:
-свали си убунту :D :D 
+5. В конзолата пишеш <br />
+ubuntu:<br />
+source venv/bin/activate<br />
+windows:<br />
+свали си убунту :D :D <br />
 
-6. След това в конзолата
-pip install -r requirements.txt
+6. След това в конзолата<br />
+pip install -r requirements.txt<br />
 
-7. После 
-export FLASK_APP=app/app.py
-flask run
+7. После <br />
+export FLASK_APP=app/app.py<br />
+flask run<br />
 
 8. Отваряш браузъра на localhost:5000/
 
