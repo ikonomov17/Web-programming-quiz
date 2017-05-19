@@ -37,8 +37,11 @@ pip install -r requirements.txt<br />
 
 7. После <br />
 export FLASK_APP=app/app.py<br />
-flask run<br />
+python app/app.py<br />
+Сървъра следи за промени във файловете, така че не би трябвало да го рестартирате често.<br />
 
 8. Отваряш браузъра на localhost:5000/
 
-9. Server-a се спира от конзолата с Ctrl+Z но трябва да затвориш терминала и да повториш 5 и 7 стъпка 
+9. Server-a се спира от конзолата с Ctrl+C
+
+10. За да излезнеш от режима (env) се пише в конзолата deactivate
