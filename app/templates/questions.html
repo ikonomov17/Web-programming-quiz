@@ -1,9 +1,6 @@
 <ul>
-    {% for q in questions %}
-    <li>{{q.text}}</li>
-    {% endfor %}
-    
-    {% for a in answers %}
-    <li>{{a.text}}</li>
+    {% for key,value in complect.iteritems() %}
+        <p>Question: {{key.text}}</p>
+        <p>Answer: {{value.text}}</p>
     {% endfor %}
 </ul>
