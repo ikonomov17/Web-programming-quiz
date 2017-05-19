@@ -1,9 +1,59 @@
-<ul>
-    {% for q in questions %}
-    <li>{{q.text}}</li>
+<nav>
+    <ul class="my-pagination justify-content-center">
+        {% for number in question_ids %}
+            <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
+        {% endfor %}
+        </li>
+    </ul>
+</nav>
+
+<div id="quiz">
+    <div class="question">
+        <h3><span class="label label-warning" id="qid">{{question.id}}</span>
+        <span id="question">{{question.text}}</span>
+        </h3>
+    </div>
+    <ul>
+    {% for a in answers %}
+    <li>
+        <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
+        <label for="s-option" class="element-animation">{{a}}</label>
+        <div class="check"><div class="inside"></div></div>
+    </li>
     {% endfor %}
     
-    {% for a in answers %}
-    <li>{{a.text}}</li>
-    {% endfor %}
-</ul>
+    </ul>
+    <div class="btn btn-success" id="nextQuestion">Send</div>
+</div>
+
+
+ <!-- old variant 
+                    <nav>
+                        <ul class="my-pagination justify-content-center">
+                            {% for number in range(1, questions_row_count + 1) %}
+                            <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{number}}</a></li>
+                            {% endfor %}
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div id="quiz">
+                        <div class="question">
+                            <h3><span class="label label-warning" id="qid">{{question.id}}</span>
+                            <span id="question">{{question.text}}</span>
+                            </h3>
+                        </div>
+                        <p>{{row_count}}</p>
+                        <ul>
+                        {% for a in answers %}
+                        <li>
+                            <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
+                            <label for="s-option" class="element-animation">{{a.text}}</label>
+                            <div class="check"><div class="inside"></div></div>
+                        </li>
+                        {% endfor %}
+                        
+                        </ul>
+                        <div class="btn btn-success" id="nextQuestion">Send</div>
+                    </div>
+                    end old variant -->

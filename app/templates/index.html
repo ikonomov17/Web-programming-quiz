@@ -94,13 +94,13 @@
             <div class="row">
 
                 <!-- Generate div for every language in database -->
-                {% for quiz in quizzes %}
+               {% for key, value in data.items() %}
                 <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="icon-{{quiz.programming_language}} myiconstyle"></i>
-                        <h3>{{quiz.name}}</h3>
-                         <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Get Started!</a>
-                        <p class="text-muted">{{quiz.message}}</p>
+                        <i class="icon-{{key.programming_language}} myiconstyle"></i>
+                        <h3>{{key.name}}</h3>
+                         <a href="/{{key.programming_language}}/{{value}}" class="page-scroll btn btn-default btn-xl sr-button">Get Started!</a>
+                        <p class="text-muted">{{key.message}}</p>
                         <!-- Goog in C++? Try this. -->
                     </div>
                 </div>

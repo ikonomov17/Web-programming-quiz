@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Creative - Start Bootstrap Theme</title>
     <!-- Bootstrap Core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-            rel="stylesheet" 
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-            crossorigin="anonymous">
+<link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+        crossorigin="anonymous">
 
     <!-- Custom Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
@@ -36,8 +36,7 @@
     <![endif]-->
 
 </head>
-
-
+<body>
 <div class="container">
         <div class="row"><br><br>
             <div class="col-sm-8 col-sm-offset-2">
@@ -47,6 +46,15 @@
                             <img src="http://schoolsearch.co.ke/systems/img/loader.gif_large.gif" alt="Loading" class="center-block loanParamsLoader">
                         </div>
                     </div>
+                    
+                    <nav>
+                        <ul class="my-pagination justify-content-center">
+                            {% for number in question_ids %}
+                                <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
+                            {% endfor %}
+                            </li>
+                        </ul>
+                    </nav>
 
                     <div id="quiz">
                         <div class="question">
@@ -58,13 +66,13 @@
                         {% for a in answers %}
                         <li>
                             <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
-                            <label for="s-option" class="element-animation">{{a.text}}</label>
+                            <label for="s-option" class="element-animation">{{a}}</label>
                             <div class="check"><div class="inside"></div></div>
                         </li>
                         {% endfor %}
                         
                         </ul>
-                        <div class="btn btn-success">Send</div>
+                        <div class="btn btn-success" id="nextQuestion">Send</div>
                     </div>
                 </div>
                 
@@ -92,3 +100,12 @@
             </div>
         </div>
     </div>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+
+    <script src="../static/js/my_scripts.js"></script>
+</body>
