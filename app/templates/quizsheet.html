@@ -46,11 +46,11 @@
                             <img src="http://schoolsearch.co.ke/systems/img/loader.gif_large.gif" alt="Loading" class="center-block loanParamsLoader">
                         </div>
                     </div>
-
+                    
                     <nav>
                         <ul class="my-pagination justify-content-center">
-                            {% for number in range(1, questions_row_count + 1) %}
-                            <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{number}}</a></li>
+                            {% for number in question_ids %}
+                                <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
                             {% endfor %}
                             </li>
                         </ul>
@@ -62,12 +62,11 @@
                             <span id="question">{{question.text}}</span>
                             </h3>
                         </div>
-                        <p>{{row_count}}</p>
                         <ul>
                         {% for a in answers %}
                         <li>
                             <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
-                            <label for="s-option" class="element-animation">{{a.text}}</label>
+                            <label for="s-option" class="element-animation">{{a}}</label>
                             <div class="check"><div class="inside"></div></div>
                         </li>
                         {% endfor %}
