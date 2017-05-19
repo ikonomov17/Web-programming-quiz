@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from sqlalchemy import create_engine
+from flask import Flask, render_template, redirect, url_for
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from database_config import Base, Quiz, Question, Answer
 import random
@@ -22,18 +22,32 @@ def HomePage():
     return render_template('index.html', quizzes=quizzes)
 
 @app.route('/python')
+@app.route('/python/')
+def RedirectToFirst():
+    return redirect(url_for('PythonQuiz', question_id = 1))
+
 @app.route('/python/<int:question_id>')
 def PythonQuiz(question_id):
     question = session.query(Question).get(question_id)
     correct_answer = session.query(Answer).get(question_id)
     query = session.query(Answer)
     row_count = int(query.count())
+    python_answers_count = session.query(Question).filter(Question.quiz_id == 1).count()
+    
+    if question_id > python_answers_count:
+        return redirect(url_for('EndResult'))
     first_random_row = query.offset(int(row_count * random.random())).first()
     second_random_row = query.offset(int(row_count * random.random())).first()
 
     all_answers = [first_random_row, second_random_row, correct_answer]
     shuffle(all_answers)
-    return render_template('quizsheet.html', question=question, answers=all_answers)
+    return render_template('quizsheet.html', question=question, answers=all_answers,
+                 questions_row_count=python_answers_count, quiz_name = "python")
+
+@app.route('/python/end')
+def EndResult():
+    return 'end'
+
 
 
 @app.route('/java')

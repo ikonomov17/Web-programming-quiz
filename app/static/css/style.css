@@ -3,3 +3,162 @@
   font-size:60px; 
 }
 
+.my-pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem
+}
+
+.my-page-item:first-child .my-page-link {
+  margin-left: 0;
+  border-bottom-left-radius: .25rem;
+  border-top-left-radius: .25rem
+}
+
+.my-page-item:last-child .my-page-link {
+  border-bottom-right-radius: .25rem;
+  border-top-right-radius: .25rem
+}
+
+.my-page-item.active .my-page-link {
+  z-index: 2;
+  color: #fff;
+  background-color: #0275d8;
+  border-color: #0275d8
+}
+
+.my-page-item.disabled .my-page-link {
+  color: #636c72;
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: #ddd
+}
+
+.my-page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #0275d8;
+  background-color: #fff;
+  border: 1px solid #ddd
+}
+
+.my-page-link:focus,
+.my-page-link:hover {
+  color: #014c8c;
+  text-decoration: none;
+  background-color: #eceeef;
+  border-color: #ddd
+}
+
+.my-pagination-lg .my-page-link {
+  padding: .75rem 1.5rem;
+  font-size: 1.25rem
+}
+
+.my-pagination-lg .my-page-item:first-child .my-page-link {
+  border-bottom-left-radius: .3rem;
+  border-top-left-radius: .3rem
+}
+
+.my-pagination-lg .my-page-item:last-child .my-page-link {
+  border-bottom-right-radius: .3rem;
+  border-top-right-radius: .3rem
+}
+
+.my-pagination-sm .my-page-link {
+  padding: .25rem .5rem;
+  font-size: .875rem
+}
+
+.my-pagination-sm .my-page-item:first-child .my-page-link {
+  border-bottom-left-radius: .2rem;
+  border-top-left-radius: .2rem
+}
+
+.my-pagination-sm .my-page-item:last-child .my-page-link {
+  border-bottom-right-radius: .2rem;
+  border-top-right-radius: .2rem
+}
+
+.my-my-page-item:first-child .my-my-page-link {
+  margin-left: 0;
+  border-bottom-left-radius: .25rem;
+  border-top-left-radius: .25rem
+}
+
+.my-my-page-item:last-child .my-my-page-link {
+  border-bottom-right-radius: .25rem;
+  border-top-right-radius: .25rem
+}
+
+.my-my-page-item.active .my-my-page-link {
+  z-index: 2;
+  color: #fff;
+  background-color: #0275d8;
+  border-color: #0275d8
+}
+
+.my-my-page-item.disabled .my-my-page-link {
+  color: #636c72;
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #fff;
+  border-color: #ddd
+}
+
+.my-my-page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #0275d8;
+  background-color: #fff;
+  border: 1px solid #ddd
+}
+
+.my-my-page-link:focus,
+.my-my-page-link:hover {
+  color: #014c8c;
+  text-decoration: none;
+  background-color: #eceeef;
+  border-color: #ddd
+}
+
+.my-pagination-lg .my-my-page-link {
+  padding: .75rem 1.5rem;
+  font-size: 1.25rem
+}
+
+.my-pagination-lg .my-my-page-item:first-child .my-my-page-link {
+  border-bottom-left-radius: .3rem;
+  border-top-left-radius: .3rem
+}
+
+.my-pagination-lg .my-my-page-item:last-child .my-my-page-link {
+  border-bottom-right-radius: .3rem;
+  border-top-right-radius: .3rem
+}
+
+.my-pagination-sm .my-my-page-link {
+  padding: .25rem .5rem;
+  font-size: .875rem
+}
+
+.my-pagination-sm .my-my-page-item:first-child .my-my-page-link {
+  border-bottom-left-radius: .2rem;
+  border-top-left-radius: .2rem
+}
+
+.my-pagination-sm .my-my-page-item:last-child .my-my-page-link {
+  border-bottom-right-radius: .2rem;
+  border-top-right-radius: .2rem
+}
