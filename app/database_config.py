@@ -30,9 +30,10 @@ class Answer(Base):
 	id = Column(Integer, primary_key=True)
 	text = Column(String(500), nullable=False)
 	question_id = Column(Integer, ForeignKey('questions.id'))
+	isCorrect = Column(Integer,ForeignKey('quizzes.id'))
 	quiz = relationship(Question)
 
-engine = create_engine('sqlite:///quiz.db')
+engine = create_engine('sqlite:///quizz.db')
 
 
 Base.metadata.create_all(engine)

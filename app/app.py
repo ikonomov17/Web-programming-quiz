@@ -7,7 +7,7 @@ from random import shuffle
 app = Flask(__name__)
 
 
-ENGINE = create_engine('sqlite:///quiz.db')
+ENGINE = create_engine('sqlite:///quizz.db')
 Base.metadata.bind = ENGINE
 
 DBSession = sessionmaker(bind=ENGINE)
@@ -27,7 +27,7 @@ def HomePage():
 
     return render_template('index.html', data=data)
 
-@app.route('/<lang>')
+@app.route('/<string:lang>')
 @app.route('/<lang>/')
 def RedirectToFirst(lang):
     return redirect(url_for('QuizResponse', lang = lang, question_id = first_questions[lang]))
@@ -56,7 +56,7 @@ def EndResult():
 
 
 
-@app.route('/<lang>/<question_id>')
+@app.route('/<string:lang>/<int:question_id>')
 def QuizResponse(lang, question_id):
     current_language = session.query(Quiz).filter(Quiz.programming_language == lang).first()
     # check if there is such language in database, if not should return error page
