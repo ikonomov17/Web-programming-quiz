@@ -33,7 +33,49 @@ class Answer(Base):
 	isCorrect = Column(Integer,ForeignKey('quizzes.id'))
 	quiz = relationship(Question)
 
-engine = create_engine('sqlite:///quizz.db')
+class User(Base):
+	__tablename__="user"
+
+	id = Column(Integer, primary_key=True)
+	name = Column(String(500), nullable=False)
+	user_answer_id = Column(Integer, ForeignKey('user_answers.id'))
+	user_question_id = Column(Integer, ForeignKey('user_questions.id'))
+	score = Column(Integer)
+
+	def __init__(self, name, user_answer_id, user_question_id):
+		self.name = name
+		self.user_answer_id = user_answer_id
+		self.user_question_id = user_question_id
+
+class UserAnswers(Base):
+	__tablename__ = 'user_answers'
+	id = Column(Integer,primary_key=True)
+	first = Column(Integer)
+	second = Column(Integer)
+	third = Column(Integer)
+	fourth = Column(Integer)
+	fifth = Column(Integer)
+	sixth = Column(Integer)
+	seventh = Column(Integer)
+	eight = Column(Integer)
+	ninth = Column(Integer)
+	tenth = Column(Integer)
+
+class UserQuestions(Base):
+	__tablename__ = 'user_questions'
+	id = Column(Integer,primary_key=True)
+	first = Column(Integer)
+	second = Column(Integer)
+	third = Column(Integer)
+	fourth = Column(Integer)
+	fifth = Column(Integer)
+	sixth = Column(Integer)
+	seventh = Column(Integer)
+	eight = Column(Integer)
+	ninth = Column(Integer)
+	tenth = Column(Integer)
+
+engine = create_engine('sqlite:///quizzz.db')
 
 
 Base.metadata.create_all(engine)
