@@ -37,7 +37,7 @@ class User(Base):
 	__tablename__="user"
 
 	id = Column(Integer, primary_key=True)
-	name = Column(String(500), nullable=False)
+	name = Column(String(500), nullable=False, unique=True)
 	user_answer_id = Column(Integer, ForeignKey('user_answers.id'))
 	user_question_id = Column(Integer, ForeignKey('user_questions.id'))
 	score = Column(Integer)
@@ -75,7 +75,7 @@ class UserQuestions(Base):
 	ninth = Column(Integer)
 	tenth = Column(Integer)
 
-engine = create_engine('sqlite:///quizzz.db')
+engine = create_engine('sqlite:///quizzzz.db')
 
 
 Base.metadata.create_all(engine)
