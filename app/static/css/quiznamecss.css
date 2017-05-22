@@ -1,9 +1,11 @@
-ody, html{
-  height: 100%;
-  background: #222222;
-  font-family: 'Lato', sans-serif;
+html, body {
+    height: 100%;
 }
-
+.fill-height {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+}
 .back{
     background: #6AA4B8;
 }
@@ -111,7 +113,7 @@ form.login input[type="submit"]:hover
 }
 .btn-success:hover {
     color: #fff !important;
-    background-color: 	#ffff00 !important;
+    background-color: lightgreen !important;
     border-color: 	#ffff00 !important;
 }
 form.login label, form.login a

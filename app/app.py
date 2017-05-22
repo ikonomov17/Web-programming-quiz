@@ -38,7 +38,7 @@ def HomePage():
 @app.route('/<string:lang>/add_user', methods=['GET','POST'])
 def AddUser(lang):
     if request.method == 'GET':
-        return render_template('proba.html')
+        return render_template('quizname.html')
     else:
         user_answers = UserAnswers()
         user_questions = UserQuestions()
