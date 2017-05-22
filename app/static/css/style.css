@@ -10,25 +10,25 @@
   display: flex;
   padding-left: 0;
   list-style: none;
-  border-radius: .25rem
+  border-radius: .25rem;
 }
 
 .my-page-item:first-child .my-page-link {
   margin-left: 0;
   border-bottom-left-radius: .25rem;
-  border-top-left-radius: .25rem
+  border-top-left-radius: .25rem;
 }
 
 .my-page-item:last-child .my-page-link {
   border-bottom-right-radius: .25rem;
-  border-top-right-radius: .25rem
+  border-top-right-radius: .25rem;
 }
 
 .my-page-item.active .my-page-link {
   z-index: 2;
   color: #fff;
   background-color: #0275d8;
-  border-color: #0275d8
+  border-color: #0275d8;
 }
 
 .my-page-item.disabled .my-page-link {
@@ -36,7 +36,7 @@
   pointer-events: none;
   cursor: not-allowed;
   background-color: #fff;
-  border-color: #ddd
+  border-color: #ddd;
 }
 
 .my-page-link {
@@ -47,7 +47,7 @@
   line-height: 1.25;
   color: #0275d8;
   background-color: #fff;
-  border: 1px solid #ddd
+  border: 1px solid #ddd;
 }
 
 .my-page-link:focus,
@@ -55,12 +55,12 @@
   color: #014c8c;
   text-decoration: none;
   background-color: #eceeef;
-  border-color: #ddd
+  border-color: #ddd;
 }
 
 .my-pagination-lg .my-page-link {
   padding: .75rem 1.5rem;
-  font-size: 1.25rem
+  font-size: 1.25rem;
 }
 
 .my-pagination-lg .my-page-item:first-child .my-page-link {

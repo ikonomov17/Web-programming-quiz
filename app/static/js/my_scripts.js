@@ -1,4 +1,3 @@
-
 const currentLocation = location.href;
 const split = currentLocation.split('/')
 const currentQuestion = split[split.length - 1];

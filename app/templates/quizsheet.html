@@ -1,112 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Creative - Start Bootstrap Theme</title>
-    <!-- Bootstrap Core CSS -->
-<link rel="stylesheet" 
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
-        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
-        crossorigin="anonymous">
-
-    <!-- Custom Fonts -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
-            rel="stylesheet" 
-            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
-            crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
-    <!-- Plugin CSS -->
-    <link href="../static/css/magnific-popup.css" rel="stylesheet">
-
-    <!-- Theme CSS -->
-    <link href="../static/css/creative.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="../static/css/style.css">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Compiled and minified CSS Bootstrap 3.3.0 -->
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="../static/css/quizsheetcss.css">
-    <link rel="stylesheet" href="../static/css/font-software/font-mfizz.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- Compiled and minified JavaScript -->
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="../static/js/my_scripts.js"></script>
 
 </head>
 <body>
 <div class="container">
-        <div class="row"><br><br>
-            <div class="col-sm-8 col-sm-offset-2">
-                <div class="loader">
-                    <div class="col-xs-3 col-xs-offset-5">
-                        <div id="loadbar" style="display: none;">
-                            <img src="http://schoolsearch.co.ke/systems/img/loader.gif_large.gif" alt="Loading" class="center-block loanParamsLoader">
-                        </div>
-                    </div>
-                    
-                    <nav>
-                        <ul class="my-pagination justify-content-center">
-                            {% for number in question_ids %}
-                                <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
-                            {% endfor %}
-                            </li>
-                        </ul>
-                    </nav>
 
-                    <div id="quiz">
-                        <div class="question">
-                            <h3><span class="label label-warning" id="qid">{{question.id}}</span>
-                            <span id="question">{{question.text}}</span>
-                            </h3>
-                        </div>
-                        <ul>
-                        {% for a in answers %}
-                        <li>
-                            <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
-                            <label for="s-option" class="element-animation">{{a}}</label>
-                            <div class="check"><div class="inside"></div></div>
-                        </li>
-                        {% endfor %}
-                        
-                        </ul>
-                        <form action=""></form>
-                        <div class="btn btn-success" id="nextQuestion">Send</div>
-                    </div>
-                </div>
-                
-                <div class="text-muted">
-                    <span id="answer"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-                <div id="result-of-question" style="display: none;">
-                    <span id="totalCorrect" class="pull-right"></span>
-                    <table class="table table-hover table-responsive" >
-                        <thead>
-                            <tr>
-                                <th>Question No.</th>
-                                <th>Our answer</th>
-                                <th>Your answer</th>
-                                <th>Result</th>
-                            </tr>
-                        </thead>
-                        <tbody id="quizResult"></tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <nav>
+                <ul class="my-pagination justify-content-center">
+                    {% for number in question_ids %}
+                        <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
+                    {% endfor %}
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-			  crossorigin="anonymous"></script>
-
-    <script src="../static/js/my_scripts.js"></script>
+    <div class="row"><br><br>
+        <div class="col-sm-8 col-sm-offset-2">
+                <div id="quiz">
+                    <div class="question">
+                        <h3>
+                            <span class="label label-warning" id="qid">{{question.id}}</span>
+                            <span id="question">{{question.text}}</span>
+                        </h3>
+                    </div>
+                    <ul>
+                        {% for a in answers %}
+                            <li>
+                            <input type="radio" class="inputoption" id="{{a[0:1]}}-option" name="selector" value="1">
+                            <label for="{{a[0:1]}}-option" class="element-animation">{{a}}</label>
+                            <div class="check"></div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <form action="POST">
+                        <div class="hint">
+                            <button id="show-hint-button">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
 </body>
+</html>
