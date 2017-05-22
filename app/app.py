@@ -13,6 +13,9 @@ Base.metadata.bind = ENGINE
 DBSession = sessionmaker(bind=ENGINE)
 session = DBSession()
 
+one_to_ten = ['first','second','third','fourth','fifth','sixth','sevent','eight','ninth','tenth']
+
+# Helper methods
 def GetLanguagesWithFirstQuestionId():
     first_questions = dict()
     quizzes = session.query(Quiz).order_by(Quiz.id).all()
@@ -39,6 +42,8 @@ def IsLanguageInDatabase(lang, db):
             return True
     return False
 
+
+# Main program logic
 @app.route('/')
 def HomePage():
     data = GetLanguagesWithFirstQuestionId()
@@ -61,49 +66,64 @@ def AddUser(lang):
         session.add(current_user)
         session.commit()
         first_questions = GetOnlyQuizNamesAndFirstQuestionIds()
-        return redirect(url_for('QuizResponse', lang = lang, question_id = first_questions[lang]))
+        return redirect(url_for('QuizResponse', lang=lang, question_id=first_questions[lang]))
 
 @app.route('/<string:lang>')
 @app.route('/<string:lang>/')
 def RedirectToAddUser(lang):
     first_questions = GetLanguagesWithFirstQuestionId()
-    LangIsInDict = IsLanguageInDatabase(lang, first_questions) 
+    LangIsInDict = IsLanguageInDatabase(lang, first_questions)
     if LangIsInDict:
-        return redirect(url_for('AddUser', lang = lang))
+        return redirect(url_for('AddUser', lang=lang))
     else:
-        return render_template('error404.html',message='No such language :))')
+        return render_template('error404.html', message='We have no quiz for this language :))')
 
-@app.route('/<string:lang>/<int:question_id>')
+@app.route('/<string:lang>/<int:question_id>', methods=['GET', 'POST'])
 def QuizResponse(lang, question_id):
-    current_language = session.query(Quiz).filter(Quiz.programming_language == lang).first()
-    # check if there is such language in database, if not should return error page
-    if current_language is None:
-        return render_template('error404.html',message='No such language :))')
+    if request.method == 'GET':
+        current_language = session.query(Quiz).filter(Quiz.programming_language == lang).first()
+        # check if there is such language in database, if not should return error page
+        if current_language is None:
+            return render_template('error404.html', message='We have no quiz for this language :))')
 
-    current_language_id = current_language.id
-    questions = session.query(Question).filter(Question.quiz_id == current_language_id).all()
-    # get all questions id's because question for one language may not be one after another
-    all_questions_ids = []
-    for q in questions:
-        all_questions_ids.append(q.id)
+        current_language_id = current_language.id
+        questions = session.query(Question).filter(Question.quiz_id == current_language_id).all()
+        # get all questions id's because question for one language may not be one after another
+        all_questions_ids = []
+        for q in questions:
+            all_questions_ids.append(q.id)
 
-    #return render_template('questions.html',programming_language=21 in all_questions_ids)
-    # check if the question_id passed in url is valid for there lang
-    question_id = int(question_id)
-    if question_id not in all_questions_ids:
-      return render_template('error404.html',message='No question with that id for this quiz')
+        #return render_template('questions.html',programming_language=21 in all_questions_ids)
+        # check if the question_id passed in url is valid for there lang
+        question_id = int(question_id)
+        if question_id not in all_questions_ids:
+            return render_template('error404.html', message='No question with that id for this quiz')
 
-    answers = session.query(Answer).filter(Answer.question_id.in_(all_questions_ids))
-    exact_question = session.query(Question).get(question_id)
-    correct_answer = session.query(Answer).get(question_id).text
-    
-    lang_answers_count = len(all_questions_ids)
-    first_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
-    second_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
-    all_answers = [first_random_row, second_random_row, correct_answer]
-    shuffle(all_answers)
-    return render_template('quizsheet.html',question_ids=all_questions_ids,question=exact_question,
-            answers = all_answers,quiz_name = lang)
+        answers = session.query(Answer).filter(Answer.question_id.in_(all_questions_ids))
+        exact_question = session.query(Question).get(question_id)
+        correct_answer = session.query(Answer).get(question_id).text
+        
+        lang_answers_count = len(all_questions_ids)
+        first_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
+        second_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
+        all_answers = [first_random_row, second_random_row, correct_answer]
+        shuffle(all_answers)
+        return render_template('quizsheet.html', question_ids=all_questions_ids, question=exact_question,
+                answers = all_answers, quiz_name = lang)
+    else:
+        last_user = session.query(User).order_by(desc(User.id)).first()
+        last_user_answers = session.query(UserAnswers).filter(UserAnswers.id == last_user.user_answer_id).first()
+        last_user_questions = session.query(UserQuestions).filter(UserQuestions.id == last_user.user_answer_id).first()
+        # split the url get the last which should be the id and remove the "?" at the end
+        current_question_id = request.full_path.encode('ascii','ignore').split("/")[2][:-1]
+        current_answer_id = session.query(Answer).filter(Answer.text == request.form['answers']).first()
+        current_question = int(request.form['current_q'].encode('ascii', 'ignore'))
+        current_answer = request.form['answers']
+        column_name = one_to_ten[current_question - 1]
+        setattr(last_user_answers, column_name, current_answer)
+        setattr(last_user_questions, column_name, current_question_id)
+        session.commit()
+        return redirect(url_for('QuizResponse', lang=lang,question_id=question_id+1))
 
 
 

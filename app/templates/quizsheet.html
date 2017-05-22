@@ -20,15 +20,13 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="../static/js/my_scripts.js"></script>
 
 </head>
 <body>
 <div class="container">
 
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-md-8 col-sm-offset-2">
             <nav>
                 <ul class="my-pagination justify-content-center">
                     {% for number in question_ids %}
@@ -41,7 +39,7 @@
     </div>
 
     <div class="row"><br><br>
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-md-8 col-sm-offset-2">
                 <div id="quiz">
                     <div class="question">
                         <h3>
@@ -49,16 +47,17 @@
                             <span id="question">{{question.text}}</span>
                         </h3>
                     </div>
+                   <form method="POST">
                     <ul>
                         {% for a in answers %}
                             <li>
-                            <input type="radio" class="inputoption" id="{{a[0:1]}}-option" name="selector" value="1">
+                            <input type="radio" class="inputoption" id="{{a[0:1]}}-option" name="answers" value="{{a}}" required>
                             <label for="{{a[0:1]}}-option" class="element-animation">{{a}}</label>
                             <div class="check"></div>
                             </li>
                         {% endfor %}
                     </ul>
-                    <form action="POST">
+                    <input id="current_view_number" style="display:none;" value="" name="current_q">
                         <div class="hint">
                             <button id="show-hint-button">Next</button>
                         </div>
@@ -67,5 +66,11 @@
             </div>
     </div>
 </div>
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="../static/js/my_scripts.js"></script>
 </body>
 </html>

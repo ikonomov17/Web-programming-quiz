@@ -14,3 +14,9 @@ $('.my-page-link').each((index, element) => {
     }
 });
 
+current_path = window.location.pathname
+current_question = $('.active').children()[0].text
+$('#current_view_number').attr('value',current_question)
+   
+
+
