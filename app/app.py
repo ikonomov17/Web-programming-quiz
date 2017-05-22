@@ -23,6 +23,16 @@ def GetLanguagesWithFirstQuestionId():
 
     return first_questions
 
+def GetOnlyQuizNamesAndFirstQuestionIds():
+    quiz_names_and_ids = dict() 
+    quizzes = GetLanguagesWithFirstQuestionId()
+
+    # encode from unicode string to normal string with the encode function
+    for quiz, id in quizzes.iteritems():
+        quiz_names_and_ids.update({quiz.programming_language.encode('ascii','ignore'): id})
+
+    return quiz_names_and_ids
+
 def IsLanguageInDatabase(lang, db):
     for record in db:
         if(record.programming_language == lang):
@@ -47,10 +57,10 @@ def AddUser(lang):
         session.commit()
         user_questions_id = session.query(UserQuestions).order_by(desc(UserQuestions.id)).first().id
         user_answers_id = session.query(UserAnswers).order_by(desc(UserAnswers.id)).first().id
-        current_user = User(request.form['name'], user_answers_id, user_questions_id)
+        current_user = User(request.form['username'], user_answers_id, user_questions_id)
         session.add(current_user)
         session.commit()
-        first_questions = GetLanguagesWithFirstQuestionId()
+        first_questions = GetOnlyQuizNamesAndFirstQuestionIds()
         return redirect(url_for('QuizResponse', lang = lang, question_id = first_questions[lang]))
 
 @app.route('/<string:lang>')
