@@ -42,6 +42,31 @@ def IsLanguageInDatabase(lang, db):
             return True
     return False
 
+def GetRandomRelatedAnswers(question_id):
+    number = int(random.random() * 10)
+
+    if number % 2 == 0:
+        answers = session.query(Answer).filter(Answer.question_id == question_id).filter(Answer.isCorrect != 1).order_by(Answer.id).all()[:2]
+        return answers
+    else:
+        answers = session.query(Answer).filter(Answer.question_id == question_id).filter(Answer.isCorrect != 1).order_by(desc(Answer.id)).all()[:2]
+        return answers
+
+def GetRandomQuestions(current_language_id):
+    number = int(random.random() * 10)
+
+    if number % 2 == 0:
+        questions = session.query(Question).filter(Question.quiz_id == current_language_id).all()
+        shuffle(questions)
+        session.close()
+        return questions[:10]
+    else:
+        questions = session.query(Question).filter(Question.quiz_id == current_language_id).order_by(desc(Question.id)).all()
+        shuffle(questions)
+        session.close()
+        return questions[:10]
+
+questions_for_user = 0
 
 # Main program logic
 @app.route('/')
@@ -65,8 +90,14 @@ def AddUser(lang):
         current_user = User(request.form['username'], user_answers_id, user_questions_id)
         session.add(current_user)
         session.commit()
+        session.rollback()
         first_questions = GetOnlyQuizNamesAndFirstQuestionIds()
-        return redirect(url_for('QuizResponse', lang=lang, question_id=first_questions[lang]))
+        global questions_for_user
+        lang_id = session.query(Quiz).filter(Quiz.programming_language == lang).first().id
+        questions_for_user = GetRandomQuestions(lang_id)
+        first_question_id = questions_for_user[0].id
+
+        return redirect(url_for('QuizResponse', lang=lang, question_id=first_question_id))
 
 @app.route('/<string:lang>')
 @app.route('/<string:lang>/')
@@ -80,6 +111,14 @@ def RedirectToAddUser(lang):
 
 @app.route('/<string:lang>/<int:question_id>', methods=['GET', 'POST'])
 def QuizResponse(lang, question_id):
+    all_questions_ids = []
+    global questions_for_user
+    questions = questions_for_user
+    # get all questions id's because question for one language may not be one after another
+        
+    for q in questions:
+        all_questions_ids.append(q.id)
+
     if request.method == 'GET':
         current_language = session.query(Quiz).filter(Quiz.programming_language == lang).first()
         # check if there is such language in database, if not should return error page
@@ -87,29 +126,23 @@ def QuizResponse(lang, question_id):
             return render_template('error404.html', message='We have no quiz for this language :))')
 
         current_language_id = current_language.id
-        questions = session.query(Question).filter(Question.quiz_id == current_language_id).all()
-        # get all questions id's because question for one language may not be one after another
-        all_questions_ids = []
-        for q in questions:
-            all_questions_ids.append(q.id)
+        
 
         #return render_template('questions.html',programming_language=21 in all_questions_ids)
         # check if the question_id passed in url is valid for there lang
         question_id = int(question_id)
         if question_id not in all_questions_ids:
             return render_template('error404.html', message='No question with that id for this quiz')
-
-        answers = session.query(Answer).filter(Answer.question_id.in_(all_questions_ids))
-        exact_question = session.query(Question).get(question_id)
-        correct_answer = session.query(Answer).get(question_id).text
-        
         lang_answers_count = len(all_questions_ids)
-        first_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
-        second_random_row = answers.offset(int(lang_answers_count * random.random())).first().text
-        all_answers = [first_random_row, second_random_row, correct_answer]
-        shuffle(all_answers)
+        answers = GetRandomRelatedAnswers(question_id)
+        nonsense_answer = session.query(Answer).offset(int(lang_answers_count * random.random())).first().text
+        correct_answer = session.query(Answer).filter(Answer.question_id == question_id).filter(Answer.isCorrect == 1).first().text
+        answers_array = [answers[0].text, answers[1].text, correct_answer, nonsense_answer]
+        shuffle(answers_array)
+        exact_question = session.query(Question).get(question_id)
+        
         return render_template('quizsheet.html', question_ids=all_questions_ids, question=exact_question,
-                answers = all_answers, quiz_name = lang)
+                answers = answers_array, quiz_name = lang)
     else:
         last_user = session.query(User).order_by(desc(User.id)).first()
         last_user_answers = session.query(UserAnswers).filter(UserAnswers.id == last_user.user_answer_id).first()
@@ -123,7 +156,7 @@ def QuizResponse(lang, question_id):
         setattr(last_user_answers, column_name, current_answer)
         setattr(last_user_questions, column_name, current_question_id)
         session.commit()
-        return redirect(url_for('QuizResponse', lang=lang,question_id=question_id+1))
+        return redirect(url_for('QuizResponse', lang=lang,question_id=all_questions_ids[all_questions_ids.index(question_id)+1]))
 
 
 
