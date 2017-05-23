@@ -7,7 +7,8 @@ const pagesCount = $('.page-item').length;
 
 let currentPage;
 $('.my-page-link').each((index, element) => {
-    if($(element).attr('href').indexOf(currentQuestion) != -1){
+    if($(element).attr('href').split('/')[2] == currentQuestion){
+        
         $(element).parent().addClass('active');
         // return false to break the loop
         return false;
