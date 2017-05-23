@@ -51,8 +51,8 @@
                     <ul>
                         {% for a in answers %}
                             <li>
-                            <input type="radio" class="inputoption" id="{{a[0:1]}}-option" name="answers" value="{{a}}" required>
-                            <label for="{{a[0:1]}}-option" class="element-animation">{{a}}</label>
+                            <input type="radio" class="inputoption" id="{{a[:2] + a[-3:]}}-option" name="answers" value="{{a}}" required>
+                            <label for="{{a[:2] + a[-3:]}}-option" class="element-animation">{{a}}</label>
                             <div class="check"></div>
                             </li>
                         {% endfor %}
