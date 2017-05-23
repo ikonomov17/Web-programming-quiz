@@ -12,7 +12,12 @@
   list-style: none;
   border-radius: .25rem;
 }
-
+.my-page-item {
+  width: 35px;
+    height: 50px;
+    font-size: large;
+    text-align: center;
+}
 .my-page-item:first-child .my-page-link {
   margin-left: 0;
   border-bottom-left-radius: .25rem;
@@ -161,4 +166,9 @@
 .my-pagination-sm .my-my-page-item:last-child .my-my-page-link {
   border-bottom-right-radius: .2rem;
   border-top-right-radius: .2rem
+}
+
+.my-nav-center {
+  display: flex;
+  justify-content: center;
 }
