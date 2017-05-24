@@ -53,7 +53,7 @@
   color: #0275d8;
   background-color: #fff;
   border: 1px solid #ddd;
-}
+  }
 
 .my-page-link:focus,
 .my-page-link:hover {
@@ -169,6 +169,7 @@
 }
 
 .my-nav-center {
+  padding-top: 10px;
   display: flex;
   justify-content: center;
 }

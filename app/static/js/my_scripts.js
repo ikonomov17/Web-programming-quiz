@@ -19,6 +19,10 @@ current_path = window.location.pathname
 current_question = $('.active').children()[0].text
 $('#current_view_number').attr('value',current_question)
 $('#qid').html(current_question)
+
+if($('.my-page-item').last().hasClass('active')){
+    $('#show-hint-button').html('End')
+}
    
 
 

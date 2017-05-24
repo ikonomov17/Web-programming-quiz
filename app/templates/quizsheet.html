@@ -23,9 +23,9 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="row">
-            <nav class="my-nav-center">
+<div class="container-fluid">
+    <div class="row my-nav-center">
+            <nav>
                 <ul class="my-pagination">
                     {% for number in question_ids %}
                         <li class="my-page-item"><a class="my-page-link" href="/{{quiz_name}}/{{number}}">{{loop.index}}</a></li>
@@ -44,12 +44,12 @@
                             <span id="question">{{question.text}}</span>
                         </h3>
                     </div>
-                   <form method="POST">
+                   <form method="POST" id="quiz-form">
                     <ul>
                         {% for a in answers %}
                             <li>
-                            <input type="radio" class="inputoption" id="{{a[:2]}}+{{loop.index}}-option" name="answers" value="{{a}}" required>
-                            <label for="{{a[:2]}}+{{loop.index}}-option" class="element-animation">{{a}}</label>
+                            <input type="radio" class="inputoption" id="{{a.text[:2]}}+{{loop.index}}-option" name="answers" value="{{a.id}}" required>
+                            <label for="{{a.text[:2]}}+{{loop.index}}-option" class="element-animation">{{a.text}}</label>
                             <div class="check"></div>
                             </li>
                         {% endfor %}

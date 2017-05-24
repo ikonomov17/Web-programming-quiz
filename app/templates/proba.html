@@ -1,2 +1,28 @@
-{{data}}
-{{d}}
+You scored: {{score}} points!
+<table>
+    <tr>
+        <th>Questions </th>
+    </tr>
+    {% for q in all_questions %}
+    <tr>
+        <td>{{q}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<table>
+    <tr>
+        <th>{{number}}</th>
+        <th>Your answer</th>
+        <th>Correct answer</th>
+    </tr>
+    
+    {% for key, value in answers.iteritems() %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
+    {% endfor%}
+        
+    
+</table>
