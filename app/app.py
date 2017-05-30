@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker,scoped_session
 from database_config import Base, Quiz, Question, Answer, User, UserAnswers, UserQuestions
 import random
 from random import shuffle
+from collections import OrderedDict
 app = Flask(__name__)
 
 
@@ -113,9 +114,8 @@ def QuizResponse(lang, question_id):
         if current_language is None:
             return render_template('error404.html', message='We have no quiz for this language :))')
 
-        current_language_id = current_language.id
+        current_language_id = int(current_language.id)
 
-        #return render_template('questions.html',programming_language=21 in all_questions_ids)
         # check if the question_id passed in url is valid for there lang
         question_id = int(question_id)
         if question_id not in all_questions_ids:
@@ -149,26 +149,27 @@ def QuizResponse(lang, question_id):
         else:
             return redirect(url_for('QuizResponse', lang=lang,question_id=all_questions_ids[all_questions_ids.index(question_id)+1]))
 
-@app.route('/<string:lang>/get_score', methods=['GET','POST'])
+@app.route('/<string:lang>/get_score')
 def ReturnScore(lang):
     user = session.query(User).order_by(desc(User.id)).first()
     user_answers = session.query(UserAnswers).order_by(desc(UserAnswers.id)).first()
     user_questions = session.query(UserQuestions).order_by(desc(UserQuestions.id)).first()
     global one_to_ten
     score = 0
-    all_questions = []
-    all_answer_text = dict()
+    history = OrderedDict()
+
     for i in range(0,10):
-         current_question_id = getattr(user_questions, one_to_ten[i])
-         all_questions.append(session.query(Question).filter(Question.id == int(current_question_id)).first().text)
-         user_answer_id = getattr(user_answers, one_to_ten[i])
+         current_question_id = int(getattr(user_questions, one_to_ten[i]))
+         current_question_text = session.query(Question).filter(Question.id == current_question_id).first().text
+         user_answer_id = int(getattr(user_answers, one_to_ten[i]))
          if user_answer_id is not None:
             correct_answer = session.query(Answer).filter(Answer.question_id == current_question_id).filter(Answer.isCorrect == 1).first()
             user_answer_text = session.query(Answer).filter(Answer.id == user_answer_id).first().text
-            all_answer_text.update({correct_answer.text : user_answer_text})
+            history[current_question_text] = {user_answer_text : correct_answer.text}
             if correct_answer.id == user_answer_id:
                 score += 1
-    return render_template('proba.html',score = score, answers = all_answer_text, all_questions = all_questions)
+
+    return render_template('result.html',score = score, vsichko = history)
 
 if __name__ == '__main__':
     app.debug = True
