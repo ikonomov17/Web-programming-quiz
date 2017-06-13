@@ -7,11 +7,16 @@ const pagesCount = $('.page-item').length;
 
 let currentPage;
 $('.my-page-link').each((index, element) => {
+    // if you don't want the other questions number to be disabled
+    // remove the else and uncomment return false
+    // WARNING! The numbers are just links and do not make a POST
+    // request. This means that user answers won't be registered in DB.
+    // Only Next button sends the data to the DB
     if($(element).attr('href').split('/')[2] == currentQuestion){
-        
         $(element).parent().addClass('active');
-        // return false to break the loop
-        return false;
+        // return false
+    } else {
+        $(element).parent().addClass('disabled');
     }
 });
 

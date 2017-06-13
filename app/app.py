@@ -14,10 +14,17 @@ Base.metadata.bind = ENGINE
 DBSession = sessionmaker(bind=ENGINE)
 session = DBSession()
 
+
+# Global variables
 one_to_ten = ['first','second','third','fourth','fifth','sixth','seventh','eight','ninth','tenth']
 
+questions_for_user = None
+
 # Helper methods
-def GetLanguagesWithFirstQuestionId():
+# This method gets all quiz names in the Db and their corresponding 
+# first question in the Db. We need this because that's how the redirection
+# on the home page works.
+def GetQuizNamesWithTheirFirstQuestionId():
     first_questions = dict()
     quizzes = session.query(Quiz).order_by(Quiz.id).all()
 
@@ -27,25 +34,34 @@ def GetLanguagesWithFirstQuestionId():
 
     return first_questions
 
+
+
+# ------------------------------
+# Don't know if need this method
+
 def GetOnlyQuizNamesAndFirstQuestionIds():
     quiz_names_and_ids = dict() 
-    quizzes = GetLanguagesWithFirstQuestionId()
+    quizzes = GetQuizNamesWithTheirFirstQuestionId()
 
     # encode from unicode string to normal string with the encode function
     for quiz, id in quizzes.iteritems():
         quiz_names_and_ids.update({quiz.programming_language.encode('ascii','ignore'): id})
 
     return quiz_names_and_ids
+# ------------------------------
 
-def IsLanguageInDatabase(lang, db):
-    for record in db:
-        if(record.programming_language == lang):
+
+
+def IsLanguageInDictionary(language, dictionary):
+    for quiz in dictionary:
+        if(quiz.programming_language == lang):
             return True
     return False
 
-def GetRandomRelatedAnswers(question_id):
-    number = int(random.random() * 10)
 
+
+def GetRandomRelatedAnswers(question_id):
+    number = int(random.random() * 10)  
     if number % 2 == 0:
         answers = session.query(Answer).filter(Answer.question_id == question_id).filter(Answer.isCorrect != 1).order_by(Answer.id).all()[:2]
         return answers
@@ -58,12 +74,11 @@ def GetRandomQuestions(current_language_id):
     shuffle(questions)
     return questions[:10]
 
-questions_for_user = None
 
 # Main program logic
 @app.route('/')
 def HomePage():
-    data = GetLanguagesWithFirstQuestionId()
+    data = GetQuizNamesWithTheirFirstQuestionId()
 
     return render_template('index.html', data=data)
 
@@ -92,8 +107,8 @@ def AddUser(lang):
 @app.route('/<string:lang>')
 @app.route('/<string:lang>/')
 def RedirectToAddUser(lang):
-    first_questions = GetLanguagesWithFirstQuestionId()
-    LangIsInDict = IsLanguageInDatabase(lang, first_questions)
+    first_questions = GetQuizNamesWithTheirFirstQuestionId()
+    LangIsInDict = IsLanguageInDictionary(lang, first_questions)
     if LangIsInDict:
         return redirect(url_for('AddUser', lang=lang.encode('ascii', 'ignore')))
     else:
@@ -116,7 +131,7 @@ def QuizResponse(lang, question_id):
 
         current_language_id = int(current_language.id)
 
-        # check if the question_id passed in url is valid for there lang
+        # check if the question_id passed in url is valid for this lang
         question_id = int(question_id)
         if question_id not in all_questions_ids:
             return render_template('error404.html', message='No question with that id for this quiz')
@@ -170,6 +185,10 @@ def ReturnScore(lang):
                 score += 1
 
     return render_template('result.html',score = score, vsichko = history)
+
+@app.errorhandler(Exception)
+def error_handler(Exception):
+    return render_template('error404.html', message= 'Ooops..Something happened (very descriptive error:))')
 
 if __name__ == '__main__':
     app.debug = True
